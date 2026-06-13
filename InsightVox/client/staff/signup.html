@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Staff Sign Up · InsightVox</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css" />
+  <link rel="stylesheet" href="/shared/style.css" />
+  <script src="/shared/theme.js"></script>
+</head>
+<body>
+  <header class="header">
+    <div class="navbar">
+      <a href="/" class="nav-brand" style="text-decoration:none;"><span class="logo-dot"></span> InsightVox</a>
+      <ul class="nav-links">
+        <li><button class="theme-toggle" aria-label="Toggle theme"></button></li>
+      </ul>
+    </div>
+  </header>
+
+  <main class="center-page">
+    <div class="auth-card">
+      <h1><i class="fa-solid fa-user-tie"></i> Staff Sign Up</h1>
+      <p class="subtitle">Requires the staff access code from your administrator</p>
+
+      <form id="signup-form">
+        <div class="form-group">
+          <label for="name">Full Name</label>
+          <input type="text" id="name" required autocomplete="name" />
+        </div>
+        <div class="form-group">
+          <label for="email">Email</label>
+          <input type="email" id="email" required autocomplete="email" />
+        </div>
+        <div class="form-group">
+          <label for="department">Department</label>
+          <input type="text" id="department" placeholder="e.g. Student Affairs" />
+        </div>
+        <div class="form-group">
+          <label for="password">Password</label>
+          <input type="password" id="password" required minlength="6" autocomplete="new-password" />
+        </div>
+        <div class="form-group">
+          <label for="staffCode">Staff Access Code</label>
+          <input type="password" id="staffCode" required autocomplete="off" />
+        </div>
+        <button type="submit" class="btn btn-primary btn-block" id="submit-btn">Create Staff Account</button>
+        <p class="error-text" id="error-text"></p>
+      </form>
+
+      <p class="auth-switch">
+        Already have an account? <a href="/staff/login.html">Log in</a>
+      </p>
+      <p class="auth-switch">
+        Student? <a href="/student/login.html">Go to student login</a>
+      </p>
+    </div>
+  </main>
+
+  <script src="/shared/api.js"></script>
+  <script>
+    redirectIfLoggedIn();
+
+    const form = document.getElementById('signup-form');
+    const errorText = document.getElementById('error-text');
+    const submitBtn = document.getElementById('submit-btn');
+
+    form.addEventListener('submit', async (e) => {
+      e.preventDefault();
+      errorText.textContent = '';
+      submitBtn.disabled = true;
+      submitBtn.textContent = 'Creating account...';
+
+      try {
+        const name = document.getElementById('name').value.trim();
+        const email = document.getElementById('email').value.trim();
+        const department = document.getElementById('department').value.trim();
+        const password = document.getElementById('password').value;
+        const staffCode = document.getElementById('staffCode').value;
+
+        const data = await Auth.signup({ name, email, password, department, role: 'staff', staffCode });
+
+        setAuth(data.token, data.user);
+        window.location.href = '/staff/dashboard.html';
+      } catch (err) {
+        errorText.textContent = err.message;
+      } finally {
+        submitBtn.disabled = false;
+        submitBtn.textContent = 'Create Staff Account';
+      }
+    });
+  </script>
+</body>
+</html>

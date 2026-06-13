@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Student Login · InsightVox</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css" />
+  <link rel="stylesheet" href="/shared/style.css" />
+  <script src="/shared/theme.js"></script>
+</head>
+<body>
+  <header class="header">
+    <div class="navbar">
+      <a href="/" class="nav-brand" style="text-decoration:none;"><span class="logo-dot"></span> InsightVox</a>
+      <ul class="nav-links">
+        <li><button class="theme-toggle" aria-label="Toggle theme"></button></li>
+      </ul>
+    </div>
+  </header>
+
+  <main class="center-page">
+    <div class="auth-card">
+      <h1><i class="fa-solid fa-user-graduate"></i> Student Login</h1>
+      <p class="subtitle">Sign in to post and track complaints</p>
+
+      <form id="login-form">
+        <div class="form-group">
+          <label for="email">Email</label>
+          <input type="email" id="email" required autocomplete="email" />
+        </div>
+        <div class="form-group">
+          <label for="password">Password</label>
+          <input type="password" id="password" required autocomplete="current-password" />
+        </div>
+        <button type="submit" class="btn btn-primary btn-block" id="submit-btn">Log In</button>
+        <p class="error-text" id="error-text"></p>
+      </form>
+
+      <p class="auth-switch">
+        New here? <a href="/student/signup.html">Create a student account</a>
+      </p>
+      <p class="auth-switch">
+        Staff member? <a href="/staff/login.html">Go to staff login</a>
+      </p>
+    </div>
+  </main>
+
+  <script src="/shared/api.js"></script>
+  <script>
+    redirectIfLoggedIn();
+
+    const form = document.getElementById('login-form');
+    const errorText = document.getElementById('error-text');
+    const submitBtn = document.getElementById('submit-btn');
+
+    form.addEventListener('submit', async (e) => {
+      e.preventDefault();
+      errorText.textContent = '';
+      submitBtn.disabled = true;
+      submitBtn.textContent = 'Logging in...';
+
+      try {
+        const email = document.getElementById('email').value.trim();
+        const password = document.getElementById('password').value;
+
+        const data = await Auth.login({ email, password });
+
+        if (data.user.role !== 'student') {
+          throw new Error('This account is registered as staff. Please use the staff login.');
+        }
+
+        setAuth(data.token, data.user);
+        window.location.href = '/student/home.html';
+      } catch (err) {
+        errorText.textContent = err.message;
+      } finally {
+        submitBtn.disabled = false;
+        submitBtn.textContent = 'Log In';
+      }
+    });
+  </script>
+</body>
+</html>

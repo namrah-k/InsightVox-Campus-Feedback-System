@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>InsightVox · Every complaint, on the record</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css" />
+  <link rel="stylesheet" href="/shared/style.css" />
+  <script src="/shared/theme.js"></script>
+</head>
+<body>
+  <header class="header">
+    <div class="navbar">
+      <div class="nav-brand"><span class="logo-dot"></span> InsightVox</div>
+      <ul class="nav-links">
+        <li><button class="theme-toggle" aria-label="Toggle theme"></button></li>
+      </ul>
+    </div>
+  </header>
+
+  <main class="center-page" style="align-items: flex-start;">
+    <div class="hero">
+      <div>
+        <div class="hero-eyebrow">Campus complaint &amp; response platform</div>
+        <h1>Say it once. <em>Track it</em> until it's resolved.</h1>
+        <p>
+          InsightVox gives every student complaint a case file: post it with photos
+          or video, see what others support, and follow its status from
+          <strong>pending</strong> to <strong>resolved</strong> — all in one place.
+        </p>
+        <div class="hero-actions">
+          <a class="btn btn-primary" href="/student/login.html">
+            <i class="fa-solid fa-user-graduate"></i> I'm a Student
+          </a>
+          <a class="btn btn-secondary" href="/staff/login.html">
+            <i class="fa-solid fa-user-tie"></i> I'm Staff
+          </a>
+        </div>
+      </div>
+
+      <div class="signal-board">
+        <div class="signal-title">Case status, at a glance</div>
+
+        <div class="signal-row pending">
+          <div class="signal-bars">
+            <span></span><span></span><span></span><span></span><span></span>
+          </div>
+          <div class="signal-label">
+            Pending
+            <small>Logged and waiting for staff review</small>
+          </div>
+        </div>
+
+        <div class="signal-row progress">
+          <div class="signal-bars">
+            <span></span><span></span><span></span><span></span><span></span>
+          </div>
+          <div class="signal-label">
+            In Progress
+            <small>Staff are looking into it</small>
+          </div>
+        </div>
+
+        <div class="signal-row resolved">
+          <div class="signal-bars">
+            <span></span><span></span><span></span><span></span><span></span>
+          </div>
+          <div class="signal-label">
+            Resolved
+            <small>Closed out, visible to everyone</small>
+          </div>
+        </div>
+      </div>
+    </div>
+  </main>
+</body>
+</html>

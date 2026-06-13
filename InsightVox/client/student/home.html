@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Home · InsightVox</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css" />
+  <link rel="stylesheet" href="/shared/style.css" />
+  <script src="/shared/theme.js"></script>
+</head>
+<body>
+  <header class="header" id="app-header"></header>
+
+  <main class="page-wrap">
+    <h1 class="page-title">Complaints Feed</h1>
+    <p class="page-subtitle">See what other students are raising and add your voice.</p>
+
+    <div class="toolbar">
+      <div class="tabs">
+        <button id="tab-trending" class="active">Trending</button>
+        <button id="tab-recent">Recent</button>
+      </div>
+      <a href="/student/create-post.html" class="btn btn-primary">
+        <i class="fa-solid fa-plus"></i> New Complaint
+      </a>
+    </div>
+
+    <div id="posts-list" class="posts-list">
+      <p class="loading-text">Loading posts...</p>
+    </div>
+  </main>
+
+  <script src="/shared/api.js"></script>
+  <script src="/shared/nav.js"></script>
+  <script src="/shared/posts-ui.js"></script>
+  <script>
+    window.IV_ACTIVE_PAGE = 'home';
+    const currentUser = requireRole('student');
+  </script>
+  <script src="home.js"></script>
+</body>
+</html>

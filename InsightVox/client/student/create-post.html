@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>New Complaint · InsightVox</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css" />
+  <link rel="stylesheet" href="/shared/style.css" />
+  <script src="/shared/theme.js"></script>
+</head>
+<body>
+  <header class="header" id="app-header"></header>
+
+  <main class="page-wrap" style="max-width: 640px;">
+    <h1 class="page-title">New Complaint</h1>
+    <p class="page-subtitle">Describe the issue clearly. You can attach a photo or short video as evidence.</p>
+
+    <form id="post-form" class="card" style="padding: 24px;">
+      <div class="form-group">
+        <label for="title">Title</label>
+        <input type="text" id="title" maxlength="150" required placeholder="Short summary of the issue" />
+      </div>
+
+      <div class="form-group">
+        <label for="category">Category</label>
+        <select id="category">
+          <option value="General">General</option>
+          <option value="Facilities">Facilities</option>
+          <option value="Academics">Academics</option>
+          <option value="Hostel">Hostel</option>
+          <option value="Cafeteria">Cafeteria</option>
+          <option value="Faculty">Faculty Conduct</option>
+          <option value="Harassment">Harassment / Safety</option>
+          <option value="Other">Other</option>
+        </select>
+      </div>
+
+      <div class="form-group">
+        <label for="description">Description</label>
+        <textarea id="description" rows="6" required placeholder="Explain what happened, where, and when..."></textarea>
+      </div>
+
+      <div class="form-group">
+        <label for="media">Attach a photo or video (optional)</label>
+        <input type="file" id="media" accept="image/*,video/*" />
+      </div>
+
+      <button type="submit" class="btn btn-primary btn-block" id="submit-btn">
+        <i class="fa-solid fa-paper-plane"></i> Submit Complaint
+      </button>
+      <p class="error-text" id="error-text"></p>
+    </form>
+  </main>
+
+  <script src="/shared/api.js"></script>
+  <script src="/shared/nav.js"></script>
+  <script>
+    window.IV_ACTIVE_PAGE = 'create';
+    const currentUser = requireRole('student');
+
+    const form = document.getElementById('post-form');
+    const errorText = document.getElementById('error-text');
+    const submitBtn = document.getElementById('submit-btn');
+
+    form.addEventListener('submit', async (e) => {
+      e.preventDefault();
+      errorText.textContent = '';
+      submitBtn.disabled = true;
+      submitBtn.innerHTML = 'Posting...';
+
+      try {
+        const title = document.getElementById('title').value.trim();
+        const category = document.getElementById('category').value;
+        const description = document.getElementById('description').value.trim();
+        const mediaFile = document.getElementById('media').files[0];
+
+        const formData = new FormData();
+        formData.append('title', title);
+        formData.append('category', category);
+        formData.append('description', description);
+        if (mediaFile) formData.append('media', mediaFile);
+
+        const { post } = await Posts.create(formData);
+        window.location.href = `/student/post-details.html?id=${post._id}`;
+      } catch (err) {
+        errorText.textContent = err.message;
+        submitBtn.disabled = false;
+        submitBtn.innerHTML = '<i class="fa-solid fa-paper-plane"></i> Submit Complaint';
+      }
+    });
+  </script>
+</body>
+</html>

@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Complaint Details · InsightVox</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css" />
+  <link rel="stylesheet" href="/shared/style.css" />
+  <script src="/shared/theme.js"></script>
+</head>
+<body>
+  <header class="header" id="app-header"></header>
+
+  <main class="page-wrap">
+    <p style="margin-bottom: 14px;"><a href="/student/home.html"><i class="fa-solid fa-arrow-left"></i> Back to feed</a></p>
+
+    <div id="post-detail">
+      <p class="loading-text">Loading post...</p>
+    </div>
+
+    <div class="comments-section">
+      <h3>Comments</h3>
+      <form id="comment-form" class="comment-form">
+        <textarea id="comment-text" placeholder="Write a comment..." required></textarea>
+        <button type="submit" class="btn btn-primary">Post</button>
+      </form>
+      <p class="error-text" id="comment-error"></p>
+      <div id="comments-list" class="comment-list"></div>
+    </div>
+  </main>
+
+  <script src="/shared/api.js"></script>
+  <script src="/shared/nav.js"></script>
+  <script src="/shared/posts-ui.js"></script>
+  <script>
+    window.IV_ACTIVE_PAGE = 'home';
+    const currentUser = requireRole('student');
+  </script>
+  <script src="/shared/post-details.js"></script>
+</body>
+</html>

@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Messages · InsightVox</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css" />
+  <link rel="stylesheet" href="/shared/style.css" />
+  <script src="/shared/theme.js"></script>
+</head>
+<body>
+  <header class="header" id="app-header"></header>
+
+  <main class="page-wrap">
+    <h1 class="page-title">Messages</h1>
+    <p class="page-subtitle">Chat privately with the staff team about your complaints.</p>
+
+    <div class="chat-panel" style="height: calc(100vh - 220px); min-height: 400px;">
+      <div class="chat-header-bar"><i class="fa-solid fa-user-tie"></i> Staff Support</div>
+      <div class="chat-messages" id="chat-messages">
+        <p class="loading-text">Loading conversation...</p>
+      </div>
+      <form class="chat-input-form" id="chat-form">
+        <label for="image-upload" class="camera-icon" title="Attach image">📷</label>
+        <input type="file" id="image-upload" accept="image/*" style="display: none;" />
+        <textarea id="chat-input" placeholder="Type your message..." rows="1"></textarea>
+        <button type="submit" class="btn btn-primary send-button">Send</button>
+      </form>
+    </div>
+  </main>
+
+  <script src="/shared/api.js"></script>
+  <script src="/shared/nav.js"></script>
+  <script src="/shared/chat-ui.js"></script>
+  <script>
+    window.IV_ACTIVE_PAGE = 'chat';
+    const currentUser = requireRole('student');
+  </script>
+  <script src="chat.js"></script>
+</body>
+</html>
